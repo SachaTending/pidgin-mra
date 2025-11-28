@@ -1,0 +1,22 @@
+# Mail.ru Agent plugin for Pidgin
+This plugin allows you to chat using mail ru agent protocol on any server, forked and modified by me(TendingStream73)
+
+Differences from original code:
+ - You can change avatar server
+ - You also can use any domain in your login
+
+Compatible with project renaissance's server
+
+For veselcraft: добавь меня в список бетатестеров пж
+
+Original README:
+
+This is Mail.ru Agent protocol plugin for Pidgin IM
+
+Changes
+~~~~~~~
+
+0.1.4
+- User avatars added
+- Mrim server request added 
+
