@@ -330,7 +330,7 @@ gboolean mra_net_send_auth(mra_serv_conn *mmp, const char *username, const char 
     mra_net_send(mmp, &status,      sizeof(status));
     mra_net_send(mmp, desc_lps,     LPSSIZE(desc_lps));
     for (i = 0; i < 5; i++) {
-        mra_net_send(mmp, &dw,      sizeof(dw));
+        mra_net_send(mmp, &dw, sizeof(dw));
     }
     ret = mra_net_send_flush(mmp);
 

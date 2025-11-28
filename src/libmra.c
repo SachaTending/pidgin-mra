@@ -64,8 +64,8 @@ gboolean mra_email_is_valid(const char *email)
 
     // check domain
     if (ret && strcmp(eml[1], "mail.ru") != 0 && strcmp(eml[1], "list.ru") != 0 && strcmp(eml[1], "inbox.ru") != 0 && strcmp(eml[1], "bk.ru") != 0 && strcmp(eml[1], "corp.mail.ru") != 0 && strcmp(eml[1], "chat.agent") != 0) {
-        ret = FALSE;
-        purple_debug_info("mra", "[%s] failed check 'allowed domains'\n", __func__);    /* FIXME */
+        //ret = FALSE;
+        //purple_debug_info("mra", "[%s] failed check 'allowed domains'\n", __func__);    /* FIXME */
     }
 
     g_strfreev(eml);
@@ -193,6 +193,7 @@ void mra_load_avatar(gpointer data, const char *email) {
     gchar *url = NULL;
 
     mmp = data;
+    PurpleConnection *gc = mmp->gc;
     g_return_if_fail(mmp != NULL);
 
     buddy = purple_find_buddy(mmp->acct, email);
@@ -212,12 +213,14 @@ void mra_load_avatar(gpointer data, const char *email) {
     } else if (strcmp(eml[1], "bk.ru") == 0) {
         domain = g_strdup("bk");
     } else {
-        purple_debug_info("mra", "[%s] unknown email domain: %s\n", __func__, eml[1]);  /* FIXME */
-        g_strfreev(eml);
+        purple_debug_info("mra", "[%s] unknown email domain: %s, just gonna use that domain to find avatar\n", __func__, eml[1]);  /* FIXME */
+        //g_strfreev(eml);
+        domain = g_strdup(eml[1]);
         return;
     }
 
-    url = g_strdup_printf("http://obraz.foto.mail.ru/%s/%s/_mrimavatar", domain, eml[0]);
+    purple_debug_info("mra", "[%s] using obraz server: %s\n", __func__, purple_account_get_string(gc->account, "obraz", "http://obraz.foto.mail.ru"));
+    url = g_strdup_printf("%s/%s/%s/_mrimavatar", purple_account_get_string(gc->account, "obraz", "http://obraz.foto.mail.ru"), domain, eml[0]);
 
     purple_debug_info("mra", "[%s] avatar url: %s\n", __func__, url);                   /* FIXME */
 
@@ -1533,6 +1536,11 @@ static void plugin_init(PurplePlugin *plugin)
 //  user defined variable: port to connect (2041)
 	option = purple_account_option_int_new(_("Port"), "port", MRA_PORT);
 	prpl_info->protocol_options = g_list_append(prpl_info->protocol_options, option);
+
+//  user defined variable: obraz server base path (http://obraz.foto.mail.ru)
+	option = purple_account_option_string_new(_("Сервер аватаров"), "obraz", "http://obraz.foto.mail.ru");
+    prpl_info->protocol_options = g_list_append(prpl_info->protocol_options, option);
+
 }
 
 /**************************************************************************************************
