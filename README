@@ -10,7 +10,7 @@ Compatible with project renaissance's server
 For veselcraft: добавь меня в список бетатестеров пж
 
 Original README:
-
+```
 This is Mail.ru Agent protocol plugin for Pidgin IM
 
 Changes
@@ -19,4 +19,4 @@ Changes
 0.1.4
 - User avatars added
 - Mrim server request added 
-
+```
