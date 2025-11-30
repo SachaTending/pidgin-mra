@@ -216,7 +216,6 @@ void mra_load_avatar(gpointer data, const char *email) {
         purple_debug_info("mra", "[%s] unknown email domain: %s, just gonna use that domain to find avatar\n", __func__, eml[1]);  /* FIXME */
         //g_strfreev(eml);
         domain = g_strdup(eml[1]);
-        return;
     }
 
     purple_debug_info("mra", "[%s] using obraz server: %s\n", __func__, purple_account_get_string(gc->account, "obraz", "http://obraz.foto.mail.ru"));
